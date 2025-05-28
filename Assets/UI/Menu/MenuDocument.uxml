@@ -1,13 +1,11 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Menu/MenuStyles.uss?fileID=7433441132597879392&amp;guid=96be9b79f8d8f7144b31905ca01bf1d5&amp;type=3#MenuStyles" />
-    <ui:VisualElement name="Menu" style="flex-grow: 1; flex-basis: initial; align-items: stretch; justify-content: center;">
-        <ui:VisualElement style="flex-grow: 1; align-items: center;">
-            <ui:Label text="MENU NAME" name="Title" style="width: auto; height: auto; -unity-font-style: bold; font-size: 65px; -unity-text-align: upper-center; background-color: rgba(0, 0, 0, 0); margin-top: 70px; margin-right: 45px; margin-bottom: 45px; margin-left: 45px;" />
-            <ui:GroupBox name="GroupBox" style="margin-top: 125px; margin-right: 125px; margin-bottom: 125px; margin-left: 125px; width: 650px; height: auto; left: auto; align-items: center;">
-                <ui:Button text="Button" class="button" />
-                <ui:Button text="Button" />
-                <ui:Button text="Button" />
-            </ui:GroupBox>
-        </ui:VisualElement>
+    <ui:VisualElement name="MainMenuContainer" style="flex-grow: 1; align-items: center;">
+        <ui:Label text="DiceBox" name="TitleLabel" style="justify-content: flex-start; align-items: center; font-size: 125px; -unity-text-align: upper-center; padding-top: 200px; color: rgb(255, 255, 255); text-shadow: 5px 5.4px 0 rgb(0, 0, 0);" />
+        <ui:GroupBox name="Buttons" style="-unity-text-align: upper-left; justify-content: flex-start;">
+            <ui:Button text="Pick Game" name="PlayButton" />
+            <ui:Button text="Settings" name="SettingsButton" />
+            <ui:Button text="Quit" name="QuitButton" />
+        </ui:GroupBox>
     </ui:VisualElement>
 </ui:UXML>

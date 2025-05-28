@@ -1,19 +1,22 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems; //Will be good for controller/arrow key support
+using System.Collections.Generic;
+using System;
+using UnityEngine.UI; //Ol Reliable
+// using UnityEngine.UIElements; //UIToolkit
 
 public class MainMenuManager : MonoBehaviour
 {
     [Header("Components")]
-    //[SerializeField] private SettingsMenuManager settingsManager;
-    [SerializeField] private GameObject mainMenu;
+    // [SerializeField] private UIDocument mainMenuUi;
+    [SerializeField] private GameObject mainMenu; //Unnecessary? ^
     [SerializeField] private GameObject gameMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private QuitScreenManager quitScreenManager;
 
-    [SerializeField] private Button playButton;
-    [SerializeField] private Button settingsButton;
-    [SerializeField] private Button quitButton;
+    [SerializeField] private Button[] mainMenuButtons;
+
+    // public List<Button> buttons;
 
 
     #region Methods
@@ -31,7 +34,18 @@ public class MainMenuManager : MonoBehaviour
     private void Init()
     //-----------------------//
     {
+        // if (buttons.Count == 0)
+        // {
+        //     buttons = mainMenuUi.rootVisualElement.Query<Button>().ToList();
+        // }
 
+        //Can this be made into a switch or cleaner statement?
+        //mainMenuUi.rootVisualElement.Q("PlayButton").RegisterCallback<OnButtonClick>(ChangeScreen(0))
+
+        if (mainMenuButtons.Length == 0)
+        {
+            mainMenuButtons = mainMenu.GetComponentsInChildren<Button>();
+        }
 
     }//END Init
 
@@ -58,14 +72,20 @@ public class MainMenuManager : MonoBehaviour
     public void QuitGame()
     //-----------------------//
     {
-        playButton.enabled = false;
-        settingsButton.enabled = false;
-        quitButton.enabled = false;
+        // foreach (Button _button in buttons)
+        // {
+        //     _button.SetEnabled(false);
+        // }
+
+        foreach (Button _button in mainMenuButtons)
+        {
+            _button.enabled = false;
+        }
 
         quitScreenManager.StartQuit();
 
     }//END QuitGame
-    
+
 
     #endregion Methods
 
