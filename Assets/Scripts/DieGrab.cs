@@ -4,105 +4,30 @@ public class DieGrab : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Camera playerCamera;
-    [SerializeField] private LayerMask interactableMask;
 
-    [Header("Game Specific Params")]
-    [SerializeField] private float maxCastDistance;
-    [SerializeField] private float maximumHeight;
-    [SerializeField] private float tossCoyoteTime;
-
-    public bool canGrabDie;
-
-    private bool isMovingDie;
-
-    private GameObject selectedDie;
+    private Vector3 screenPoint;
+    private Vector3 offset;
 
     //-----------------------//
-    void Start()
+    void OnMouseDown()
     //-----------------------//
     {
-        Init();
-    }//END Start
+        screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+
+        offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+
+    }//END OnMouseDown
 
     //-----------------------//
-    void Update()
-    //-----------------------//
-    {
-        GrabDie();
-
-    }//END Update
-
-    //-----------------------//
-    void FixedUpdate()
+    void OnMouseDrag()
     //-----------------------//
     {
-        MoveDie();
+        Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
 
-    }//END FixedUpdate
+        Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
+        transform.position = curPosition;
 
-    //-----------------------//
-    void Init()
-    //-----------------------//
-    {
-        if (playerCamera == null)
-        {
-            playerCamera = Camera.main;
-        }
-        
-    }//END Init
+    }//END OnMouseDrag
 
-    //-----------------------//
-    void GrabDie()
-    //-----------------------//
-    {
-        Vector3 _mousePosition = Input.mousePosition;
-        _mousePosition.y = maximumHeight; //Lock die height when grabbed?
-        _mousePosition = playerCamera.ScreenToWorldPoint(_mousePosition); //Unnecessary?
-
-
-        if (canGrabDie == true)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray _ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit _rayHit;
-
-                if (Physics.Raycast(_ray, out _rayHit, maxCastDistance, interactableMask))
-                {
-                    // if (_rayHit.transform.GetComponentInChildren<Renderer>().material.color == Color.blue)
-                    // {
-                    //     _rayHit.transform.GetComponentInChildren<Renderer>().material.color = Color.red;
-                    // }
-                    // else
-                    // {
-                    //     _rayHit.transform.GetComponentInChildren<Renderer>().material.color = Color.blue;
-                    // }
-
-                    if (_rayHit.transform.GetComponent<Die>())
-                    {
-                        selectedDie = _rayHit.transform.gameObject;
-                        isMovingDie = true;
-                    }
-                }
-            }
-            else
-            {
-                selectedDie = null;
-                isMovingDie = false;
-            }
-        } 
-
-    }//END GrabDie
-
-    //-----------------------//
-    void MoveDie()
-    //-----------------------//
-    {
-        if (isMovingDie == true)
-        {
-            selectedDie.transform.position = Input.mousePosition;
-        }
-
-    }//END MoveDie
 
 }//END CLASS DieGrab

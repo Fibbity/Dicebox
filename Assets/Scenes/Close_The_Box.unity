@@ -3576,13 +3576,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1786512026}
-  interactableMask:
-    serializedVersion: 2
-    m_Bits: 64
-  maxCastDistance: 50
-  maximumHeight: 10
-  tossCoyoteTime: 10
-  canGrabDie: 1
 --- !u!1 &1295244030
 GameObject:
   m_ObjectHideFlags: 0
@@ -4851,6 +4844,7 @@ GameObject:
   - component: {fileID: 8169626563730779259}
   - component: {fileID: 8169626563730779258}
   - component: {fileID: 8169626563730779260}
+  - component: {fileID: 8169626563730779261}
   m_Layer: 6
   m_Name: Die
   m_TagString: Untagged
@@ -4972,6 +4966,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e850805e0593e84ea36a013023df31b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8169626563730779261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585680881499765094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ff435ecaa94df48a446323f63ca1e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 1786512026}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
