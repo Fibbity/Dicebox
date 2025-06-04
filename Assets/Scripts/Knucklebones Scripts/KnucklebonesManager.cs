@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class KnucklebonesManager : MonoBehaviour
 {
+
+    #region Components
+
+
     [Header("Components")]
     [Header("Dice")]
     [Tooltip("Ensure each image corresponds with its value, starting from 0")]
@@ -11,15 +15,27 @@ public class KnucklebonesManager : MonoBehaviour
     [SerializeField] private Image playerDieImage;
     [SerializeField] private Image aIDieImage;
 
+    [SerializeField] private Image[] playerLeftColumnPlacements;
+    [SerializeField] private Image[] playerCenterColumnPlacements;
+    [SerializeField] private Image[] playerRightColumnPlacements;
+
+    [SerializeField] private Image[] columnHighlightImages;
+
     [Header("Time")]
     [SerializeField] private float rollingFaceTime;
     [SerializeField] private float minimumRollTime;
     [SerializeField] private float maximumRollTime;
-
+   
     private bool isRolling;
-    [SerializeField] private bool isPlayerTurn; //unserialize after testing
+    private bool isPlayerTurn;
     private float rollTime;
 
+    private Image selectedDie;
+
+
+    #endregion Components
+
+    #region Methods
 
     //----------------------//
     void Update()
@@ -40,34 +56,72 @@ public class KnucklebonesManager : MonoBehaviour
 
     }//END DeductRollTime
 
-    //----------------------//
-    //Player 0 is the human, Player 1 is the AI
-    //----------------------//
-    public void DetermineDie(int _player)
-    //----------------------//
-    {
-
-
-
-    }//END DetermineDie
-
-
     //1 need to set player or AI die
     //2 change the image at a rate we can see
     //3 needs to be clean
     //4 needs to stop on random number
     //5 die faces need to be random order and not repeat the last one
     //----------------------//
-    public void RollDie() //Make private/initiate differently after testing
+    public void RollDie(bool _isPlayerTurn) //Make private/initiate differently after testing
     //----------------------//
     {
+        selectedDie = null;
+        isPlayerTurn = _isPlayerTurn;
+
         rollTime = Random.Range(minimumRollTime, maximumRollTime);
         isRolling = true;
 
         StartCoroutine(IRollDice());
-        
+
 
     }//END RollDie
+
+    //----------------------//
+    //0 = Left, 1 = Middle, 2 = Right
+    public void HighlightColumn(int _column)
+    //----------------------//
+    {
+        columnHighlightImages[_column].color = Color.blue;
+
+        Image[] _currentColumnImages = new Image[3];
+
+        switch (_column)
+        {
+            case 0:
+                _currentColumnImages = playerLeftColumnPlacements;
+                break;
+            case 1:
+                _currentColumnImages = playerCenterColumnPlacements;
+                break;
+            case 2:
+                _currentColumnImages = playerRightColumnPlacements;
+                break;
+        }
+
+        for (int i = 0; i < _currentColumnImages.Length; i++)
+        {
+            if (_currentColumnImages[i] == null)
+            {
+                _currentColumnImages[i].sprite = selectedDie.sprite;
+                //playerLeftColumnPlacements[i].color.a = 0.75f;
+            }
+        }
+
+    }//END HighlightColumn
+
+    //----------------------//
+    //0 = Left, 1 = Middle, 2 = Right
+    public void SelectColumn(int _column)
+    //----------------------//
+    {
+        
+
+
+    }//END SelectColumn
+
+
+    #endregion Methods
+
 
     //----------------------//
     //This is a recursive coroutine
@@ -92,8 +146,14 @@ public class KnucklebonesManager : MonoBehaviour
         {
             StartCoroutine(IRollDice());
         }
+        else
+        {
+            isRolling = false;
+            selectedDie.sprite = dieImages[_currentFace];
+        }
 
     }//END IRollDice
+
 
 
 }//END CLASS KnucklebonesManager

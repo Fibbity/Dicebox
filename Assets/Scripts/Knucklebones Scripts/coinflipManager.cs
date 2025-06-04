@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using Unity.VisualScripting;
 
 
 public class coinflipManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class coinflipManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Button[] coinButtons;
     [SerializeField] private TMP_Text coinText;
+
+    [SerializeField] private KnucklebonesManager knuckleBonesManager;
 
     //----------------------//
     public void FlipCoin(int _side)
@@ -25,11 +28,11 @@ public class coinflipManager : MonoBehaviour
 
         if (_sideUp == 0)
         {
-            coinText.text = "HEADS";
+            coinText.text = "Flipped HEADS";
         }
         else
         {
-            coinText.text = "TAILS";
+            coinText.text = "Flipped TAILS";
 
         }
 
@@ -45,12 +48,12 @@ public class coinflipManager : MonoBehaviour
     }//END FlipCoin
 
     //----------------------//
-    IEnumerator IStartGame(bool _isStarting)
+    IEnumerator IStartGame(bool _isPlayerTurn)
     //----------------------//
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
 
-        if (_isStarting == true)
+        if (_isPlayerTurn == true)
         {
             coinText.text = "You Go First";
         }
@@ -59,6 +62,12 @@ public class coinflipManager : MonoBehaviour
             coinText.text = "You Go Second";
 
         }
+
+        yield return new WaitForSeconds(2);
+
+        knuckleBonesManager.gameObject.SetActive(true);
+        knuckleBonesManager.RollDie(_isPlayerTurn);
+        this.gameObject.SetActive(false);
 
     }//END IStartGame
 
